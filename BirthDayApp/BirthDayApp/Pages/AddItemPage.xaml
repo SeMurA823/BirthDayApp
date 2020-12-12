@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.Pages.AddItemPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="button" TargetType="Button">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="0"/>
+            </Style>
+            <Style x:Key="frame" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Margin" Value="20,20"/>
+                <Setter Property="CornerRadius" Value="20"/>
+            </Style>
+            <Style x:Key="input" TargetType="Entry">
+                <Setter Property="FontFamily" Value="Oswald"/>
+                <Setter Property="FontSize" Value="Title"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="Indigo"/>
+                <Setter Property="PlaceholderColor" Value="Indigo"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollView VerticalOptions="Center" Grid.Row="0">
+                <Frame Style="{StaticResource frame}">
+                    <StackLayout Spacing="0">
+                        <Frame BorderColor="Indigo" CornerRadius="100" Padding="0" HorizontalOptions="Center" Margin="0,20">
+                            <Image Source="@drawable/ProfileLogo.png" x:Name="Photo" WidthRequest="200" HeightRequest="200"/>
+                        </Frame>
+                        <Entry Style="{StaticResource input}" Placeholder="Имя" x:Name="FirstName"/>
+                        <Entry Style="{StaticResource input}" Placeholder="Фамилия" x:Name="LastName"/>
+                        <DatePicker Style="{StaticResource input}" x:Name="BirthDate"/>
+                    </StackLayout>
+                </Frame>
+            </ScrollView>
+            <Grid VerticalOptions="End" Grid.Row="1" ColumnSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="Готово" Grid.Column="1" Style="{StaticResource button}" BackgroundColor="DarkSlateBlue" Clicked="Done_Clicked"/>
+                <Button Text="Отмена" Grid.Column="0" Style="{StaticResource button}" BackgroundColor="SlateBlue" Clicked="Cancel_Clicked"/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
