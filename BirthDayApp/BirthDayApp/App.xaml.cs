@@ -1,7 +1,10 @@
 ﻿using BirthDayApp.Items;
+using BirthDayApp.Pages;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,15 +15,21 @@ namespace BirthDayApp
     {
         private const string PATH_FRIEND_LIST = "friendlist.fu";
         private const string PATH_CONFIGURATION = "configuration.fr";
-        private List<Friend> friends;
+        private ObservableCollection<Friend> friends;
+        private ObservableCollection<Friend> friendsFavorites;
         private Configuration configuration;
-        private MainPage mainPage;
+        private TabbedPageMain mainPage;
         public App()
         {
             InitializeComponent();
             friends = ReadFriends();
-            MainPage = (mainPage = new MainPage(friends));
-            mainPage.WriteFriendEvent += WriteFriend;
+            friendsFavorites = ReadFavoriteFriends();
+            mainPage = new TabbedPageMain();
+            MainPage = mainPage;
+            mainPage.FriendListPage.WriteFriend += WriteFriends;
+            mainPage.FriendListPage.SetItemSource(friends);
+            mainPage.MainPage.SetItemSource(friendsFavorites);
+            friends.CollectionChanged += WriteFriends;
         }
 
         protected override void OnStart()
@@ -34,25 +43,27 @@ namespace BirthDayApp
         protected override void OnResume()
         {
         }
-        private void WriteFriend(object sender, EventArgs e)
+        private void WriteFriends(object sender, EventArgs e)
         {
-            Friend f = sender as Friend;
-            if (f != null) WriteFriend(f);
-        }
-        public void WriteFriend(Friend f)
-        {
-            friends.Add(f);
-            mainPage.PrintFriends();
             WriteFriends();
         }
-        private List<Friend> ReadFriends()
+
+        private ObservableCollection<Friend> ReadFriends()
         {
-            List<Friend> list = ReadItems<List<Friend>>(PATH_FRIEND_LIST);
-            return (list == null) ? (new List<Friend>()): list;
+            Friend[] friends;
+            if ((friends = ReadItems<Friend[]>(PATH_FRIEND_LIST)) == null) return new ObservableCollection<Friend>();
+            return new ObservableCollection<Friend>(friends);
+        }
+        private ObservableCollection<Friend> ReadFavoriteFriends()
+        {
+            ObservableCollection<Friend> list = new ObservableCollection<Friend>();
+            foreach (var el in list)
+                if (el.IsFavorite) list.Add(el);
+            return list;
         }
         private void WriteFriends()
         {
-            WriteItems<List<Friend>>(friends, PATH_FRIEND_LIST);
+            WriteItems<ObservableCollection<Friend>>(friends, PATH_FRIEND_LIST);
         }
         private void WriteItems<T>(T t, string path)
         {

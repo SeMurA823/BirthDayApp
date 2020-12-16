@@ -15,6 +15,8 @@ namespace BirthDayApp.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             SetStatusBarColor(Android.Graphics.Color.Indigo);
+            
+
 
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;

@@ -12,10 +12,13 @@ using Android.Views;
 using Android.Util;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Xamarin.Forms.Platform.Android.AppCompat;
+using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(Entry), typeof(BirthDayApp.Droid.WithoutSolidCustomEntryRender))]
 [assembly: ExportRenderer(typeof(DatePicker), typeof(BirthDayApp.Droid.WithoutSolidCustomDatePickerRender))]
 [assembly: ExportRenderer(typeof(SearchBar), typeof(BirthDayApp.Droid.WithoutSolidCustomSearchBarRender))]
+[assembly: ExportRenderer(typeof(NavigationPage), typeof(BirthDayApp.Droid.CNavigationPageRenderer))]
 namespace BirthDayApp.Droid
 {
     public class WithoutSolidCustomEntryRender:EntryRenderer
@@ -52,6 +55,28 @@ namespace BirthDayApp.Droid
         {
             base.OnElementChanged(e);
             Control?.SetBackgroundColor(Android.Graphics.Color.Transparent);
+        }
+    }
+    public class CNavigationPageRenderer : NavigationPageRenderer
+    {
+        public CNavigationPageRenderer(Context context) : base(context)
+        {
+
+        }
+
+        protected override Task<bool> OnPushAsync(Page view, bool animated = false)
+        {
+            return base.OnPushAsync(view, animated);
+        }
+
+        protected override Task<bool> OnPopViewAsync(Page page, bool animated = false)
+        {
+            return base.OnPopViewAsync(page, animated);
+        }
+
+        protected override Task<bool> OnPopToRootAsync(Page page, bool animated = false)
+        {
+            return base.OnPopToRootAsync(page, animated);
         }
     }
 

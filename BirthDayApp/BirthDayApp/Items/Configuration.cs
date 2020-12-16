@@ -7,8 +7,6 @@ namespace BirthDayApp.Items
 {
     public class Configuration
     {
-        [JsonProperty("token")]
-        string Token;
-        string AppId = "7629034";
+        public TypeSortFriend TypeSortFriend = TypeSortFriend.NORMAL;
     }
 }

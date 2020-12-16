@@ -11,14 +11,17 @@ using Xamarin.Forms.Xaml;
 namespace BirthDayApp.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddItemPage : ContentPage
+    public partial class EditItemPage : ContentPage
     {
         public Friend Friend { get; set; }
         public event EventHandler CancelEvent;
         public event EventHandler DoneEvent;
-        public AddItemPage()
+        public event EventHandler RemoveEvent;
+        public EditItemPage(Friend friend)
         {
+            Friend = friend;
             InitializeComponent();
+            stackInfo.BindingContext = Friend;
         }
 
         private void Cancel_Clicked(object sender, EventArgs e)
@@ -27,30 +30,33 @@ namespace BirthDayApp.Pages
         }
         private void Done_Clicked(object sender, EventArgs e)
         {
-            if (FirstName.Text == null)
+            if (firstName.Text == null)
             {
-                FirstName.TextColor = Color.DarkRed;
-                FirstName.TextChanged += Text_Edit;
+                firstName.TextColor = Color.DarkRed;
+                firstName.TextChanged += Text_Edit;
                 return;
             }
-            if (LastName.Text == null)
+            if (lastName.Text == null)
             {
-                LastName.TextColor = Color.DarkRed;
-                LastName.TextChanged += Text_Edit;
+                lastName.TextColor = Color.DarkRed;
+                lastName.TextChanged += Text_Edit;
                 return;
             }
-            if (BirthDate.Date > DateTime.Now)
+            if (bdate.Date > DateTime.Now)
             {
-                BirthDate.TextColor = Color.DarkRed;
-                BirthDate.PropertyChanged += Date_Edit;
+                bdate.TextColor = Color.DarkRed;
+                bdate.PropertyChanged += Date_Edit;
                 return;
             }
-            Friend = new Friend(
-                FirstName.Text,
-                LastName.Text,
-                BirthDate.Date,
-                Photo.Source.ToString());
+            Friend.FirstName = firstName.Text;
+            Friend.LastName = lastName.Text;
+            Friend.BirthDate = bdate.Date;
+            Friend.BirthDateStr = bdate.Date.ToShortDateString();
             DoneEvent.Invoke(this, EventArgs.Empty);
+        }
+        private void Remove_Clicked(object sender, EventArgs e)
+        {
+            RemoveEvent.Invoke(this, e);
         }
         private void Text_Edit(object sender, EventArgs e)
         {

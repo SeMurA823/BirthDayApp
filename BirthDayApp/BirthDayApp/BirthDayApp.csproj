@@ -11,6 +11,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\ListViewPage1.xaml.cs" />
+    <Compile Remove="Pages\Page1.xaml.cs" />
+    <Compile Remove="Pages\SettingPages\Page1.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Pages\ListViewPage1.xaml" />
+    <EmbeddedResource Remove="Pages\Page1.xaml" />
+    <EmbeddedResource Remove="Pages\SettingPages\Page1.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Oswald-Regular.ttf" />
   </ItemGroup>
 
@@ -25,7 +37,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Pages\EditItemPage.xaml.cs">
+      <DependentUpon>EditItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\FriendListPage.xaml.cs">
+      <DependentUpon>FriendListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Pages\AddItemPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\FriendListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\SettingPages\SortTypePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Pages\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="TabbedPageMain.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

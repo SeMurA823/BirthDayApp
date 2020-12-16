@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BirthDayApp.Pages.AddItemPage">
+             xmlns:locale="clr-namespace:BirthDayApp.Items"
+             x:Class="BirthDayApp.Pages.EditItemPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="button" TargetType="Button">
@@ -31,13 +32,14 @@
             </Grid.RowDefinitions>
             <ScrollView VerticalOptions="Center" Grid.Row="0">
                 <Frame Style="{StaticResource frame}">
-                    <StackLayout Spacing="0">
+                    <StackLayout Spacing="0" x:Name="stackInfo">
                         <Frame BorderColor="Indigo" CornerRadius="100" Padding="0" HorizontalOptions="Center" Margin="0,20">
-                            <Image Source="@drawable/ProfileLogo.png" x:Name="Photo" WidthRequest="200" HeightRequest="200"/>
+                            <Image Source="@drawable/ProfileLogo.png" x:Name="photo" WidthRequest="200" HeightRequest="200"/>
                         </Frame>
-                        <Entry Style="{StaticResource input}" Placeholder="Имя" x:Name="FirstName"/>
-                        <Entry Style="{StaticResource input}" Placeholder="Фамилия" x:Name="LastName"/>
-                        <DatePicker Style="{StaticResource input}" x:Name="BirthDate"/>
+                        <Entry Style="{StaticResource input}" Text="{Binding FirstName}" x:Name="firstName"/>
+                        <Entry Style="{StaticResource input}" Text="{Binding LastName}" x:Name="lastName"/>
+                        <DatePicker Style="{StaticResource input}" x:Name="bdate" Date="{Binding BirthDate}"/>
+                        <ImageButton Source="@drawable/TrashIcon.png" HorizontalOptions="End" Margin="20,20" WidthRequest="24" BackgroundColor="Transparent" Clicked="Remove_Clicked"/>
                     </StackLayout>
                 </Frame>
             </ScrollView>
@@ -49,7 +51,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Text="Готово" Grid.Column="1" Style="{StaticResource button}" BackgroundColor="DarkSlateBlue" Clicked="Done_Clicked"/>
+                <Button Text="Изменить" Grid.Column="1" Style="{StaticResource button}" BackgroundColor="DarkSlateBlue" Clicked="Done_Clicked"/>
                 <Button Text="Отмена" Grid.Column="0" Style="{StaticResource button}" BackgroundColor="SlateBlue" Clicked="Cancel_Clicked"/>
             </Grid>
         </Grid>

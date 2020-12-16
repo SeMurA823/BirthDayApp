@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.Pages.SettingsPage"
+             Title="НАСТРОЙКИ"
+             IconImageSource="@drawable/SettingsIcon.png">
+    <ContentPage.Content>
+        <ListView x:Name="listView" Margin="0,20" SeparatorVisibility="None" RowHeight="50" ItemSelected="listView_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding TextStr}" TextColor="DarkSlateBlue" FontSize="24" Padding="20,0" VerticalOptions="Center"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>
