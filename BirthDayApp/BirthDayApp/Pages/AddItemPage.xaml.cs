@@ -49,7 +49,7 @@ namespace BirthDayApp.Pages
                 FirstName.Text,
                 LastName.Text,
                 BirthDate.Date,
-                Photo.Source.ToString());
+                "@drawable/ProfileLogo.png");
             DoneEvent.Invoke(this, EventArgs.Empty);
         }
         private void Text_Edit(object sender, EventArgs e)

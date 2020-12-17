@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.Pages.MainPages.TodayMainPage"
+             xmlns:locale ="clr-namespace:BirthDayApp.Pages.MainPages"
+             Title="СЕГОДНЯ">
+    <ContentPage.Resources>
+        <ResourceDictionary x:Name="resourceDictionary">
+            <locale:AgeConvert x:Key="age_convert"/>
+            <Style x:Key="labelBlock" TargetType="Label">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="TextColor" Value="Indigo"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="labelName" TargetType="Label">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="TextColor" Value="DarkSlateBlue"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="White">
+            <StackLayout x:Name="empty" Padding="50">
+                <Image Source="@drawable/sad.png" WidthRequest="200" HorizontalOptions="Center"/>
+                <Label Text="СЕГОДНЯ ПОЗДРАВИТЬ НЕКОГО" TextColor="Indigo" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+            </StackLayout>
+            <CollectionView x:Name="todayList">
+                <CollectionView.Header>
+                    <StackLayout Padding="50">
+                        <Image Source="@drawable/balloons.png"/>
+                    </StackLayout>
+                </CollectionView.Header>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                           ItemSpacing="20" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <StackLayout Spacing="0">
+                                <Frame HorizontalOptions="Center" Margin="20,10" Padding="0" CornerRadius="75" Grid.Column="0" HeightRequest="150" WidthRequest="150">
+                                    <Image Source="{Binding PathImage}"/>
+                                </Frame>
+                                <Label Text="{Binding FirstName}" HorizontalTextAlignment="Center" Style="{StaticResource labelName}"/>
+                                <Label Text="{Binding LastName}" HorizontalTextAlignment="Center" Style="{StaticResource labelName}"/>
+                                <Label Text="{Binding BirthDate, Converter={StaticResource age_convert}}" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

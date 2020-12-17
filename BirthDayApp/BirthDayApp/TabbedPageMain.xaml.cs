@@ -29,12 +29,7 @@ namespace BirthDayApp
             FriendListPage = new FriendListPage();
             
             Children.Add(new SettingsNavigationPage(SettingsPage));
-            Children.Add(new NavigationPage(MainPage)
-            {
-                Title = "Главная",
-                IconImageSource = "@drawable/MainIcon.png",
-                BarTextColor = Color.White
-            });
+            Children.Add(MainPage);
             Children.Add(new FriendsListNavigationPage(FriendListPage));
 
             InitializeComponent();

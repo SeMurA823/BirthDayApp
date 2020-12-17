@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,20 +16,22 @@ namespace BirthDayApp
     {
         private const string PATH_FRIEND_LIST = "friendlist.fu";
         private const string PATH_CONFIGURATION = "configuration.fr";
+        private int countBeforeDays = 30;
         private ObservableCollection<Friend> friends;
-        private ObservableCollection<Friend> friendsFavorites;
+        private ObservableCollection<Friend> friendsTodayBirth;
+        private ObservableCollection<Friend> friendsNearBirth;
         private Configuration configuration;
         private TabbedPageMain mainPage;
         public App()
         {
             InitializeComponent();
-            friends = ReadFriends();
-            friendsFavorites = ReadFavoriteFriends();
+            ReadFriends();
             mainPage = new TabbedPageMain();
             MainPage = mainPage;
             mainPage.FriendListPage.WriteFriend += WriteFriends;
             mainPage.FriendListPage.SetItemSource(friends);
-            mainPage.MainPage.SetItemSource(friendsFavorites);
+            mainPage.MainPage.NearestMainPage.SetItemSource(friendsNearBirth);
+            mainPage.MainPage.TodayMainPage.SetItemSource(friendsTodayBirth);
             friends.CollectionChanged += WriteFriends;
         }
 
@@ -47,19 +50,15 @@ namespace BirthDayApp
         {
             WriteFriends();
         }
+        private void ReadFriends()
+        {
+            Friend[] arr;
+            
+            if ((arr = ReadItems<Friend[]>(PATH_FRIEND_LIST)) == null) friends = new ObservableCollection<Friend>();
+            else friends = new ObservableCollection<Friend>(arr);
 
-        private ObservableCollection<Friend> ReadFriends()
-        {
-            Friend[] friends;
-            if ((friends = ReadItems<Friend[]>(PATH_FRIEND_LIST)) == null) return new ObservableCollection<Friend>();
-            return new ObservableCollection<Friend>(friends);
-        }
-        private ObservableCollection<Friend> ReadFavoriteFriends()
-        {
-            ObservableCollection<Friend> list = new ObservableCollection<Friend>();
-            foreach (var el in list)
-                if (el.IsFavorite) list.Add(el);
-            return list;
+            friendsTodayBirth = new ChildCollection<Friend>(friends, x=>x.TodayBirthDay());
+            friendsNearBirth = new ChildCollection<Friend>(friends, x => (x.BeforeBirthDay() > 0 && x.BeforeBirthDay() < countBeforeDays));
         }
         private void WriteFriends()
         {

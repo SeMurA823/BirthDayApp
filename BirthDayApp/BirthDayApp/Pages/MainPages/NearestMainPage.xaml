@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.Pages.MainPages.NearestMainPage"
+             xmlns:locale="clr-namespace:BirthDayApp.Pages.MainPages"
+             Title="СКОРО">
+    <ContentPage.Resources>
+        <ResourceDictionary x:Name="resourceDictionary">
+            <locale:BeforeDayConvert x:Key="before_day_convert"/>
+            <locale:AgeConvert x:Key="age_convert"/>
+            <Style x:Key="labelBlock" TargetType="Label">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="TextColor" Value="Indigo"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style x:Key="labelName" TargetType="Label">
+                <Setter Property="FontSize" Value="24"/>
+                <Setter Property="TextColor" Value="DarkSlateBlue"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="White">
+            <CollectionView x:Name="soonList" Margin="20">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                           ItemSpacing="30" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Frame Grid.Column="0" VerticalOptions="Center" Padding="0" CornerRadius="50" HeightRequest="100">
+                                <Image Source="{Binding PathImage}"/>
+                            </Frame>
+                            <StackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
+                                <Label Style="{StaticResource labelName}" FontAttributes ="None" FontSize="20">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <FormattedString.Spans>
+                                                <Span Text="{Binding FirstName}"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding LastName}"/>
+                                            </FormattedString.Spans>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="{Binding BirthDate, Converter={StaticResource before_day_convert}}" TextColor="DarkRed"/>
+                                <Label Text="{Binding BirthDate, Converter={StaticResource age_convert}}"/>
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
