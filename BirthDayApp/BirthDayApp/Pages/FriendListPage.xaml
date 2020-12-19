@@ -48,8 +48,8 @@
                     <SearchBar.Placeholder>Поиск</SearchBar.Placeholder>
                 </SearchBar>
             </Frame>
-            <ScrollView Grid.Row="1" BackgroundColor="White">
-                <ListView x:Name="listView" RowHeight="100" SeparatorVisibility="None" Margin="0,20" ItemSelected="listView_ItemSelected">
+            <StackLayout Grid.Row="1" BackgroundColor="White">
+                <ListView x:Name="listView" RowHeight="100" SeparatorVisibility="None" ItemSelected="listView_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -78,7 +78,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </ScrollView>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -16,9 +16,24 @@ namespace BirthDayApp.Pages
         public Friend Friend { get; set; }
         public event EventHandler CancelEvent;
         public event EventHandler DoneEvent;
+        private string urlImage;
         public AddItemPage()
         {
             InitializeComponent();
+            urlImage = "@drawable/ProfileLogo.png";
+        }
+        public AddItemPage(VkManager.items.Friend friend)
+        {
+            InitializeComponent();
+            FirstName.Text = friend.FirstName;
+            LastName.Text = friend.LastName;
+            Photo.Source = (urlImage = friend.Photo200);
+            try
+            {
+                BirthDate.Date = DateTime.Parse(friend.BDate);
+            } catch (SystemException){
+
+            }
         }
 
         private void Cancel_Clicked(object sender, EventArgs e)
@@ -49,7 +64,7 @@ namespace BirthDayApp.Pages
                 FirstName.Text,
                 LastName.Text,
                 BirthDate.Date,
-                "@drawable/ProfileLogo.png");
+                urlImage);
             DoneEvent.Invoke(this, EventArgs.Empty);
         }
         private void Text_Edit(object sender, EventArgs e)

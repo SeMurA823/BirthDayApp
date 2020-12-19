@@ -7,6 +7,7 @@ namespace BirthDayApp.Items
 {
     public class Configuration
     {
-        public TypeSortFriend TypeSortFriend = TypeSortFriend.NORMAL;
+        [JsonProperty("token")]
+        public string Token { get; set; }
     }
 }

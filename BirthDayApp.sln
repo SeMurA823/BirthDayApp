@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirthDayApp.Android", "BirthDayApp\BirthDayApp.Android\BirthDayApp.Android.csproj", "{F6CE9C4D-F16B-4AB3-A978-0C4F8CBCB52A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirthDayApp", "BirthDayApp\BirthDayApp\BirthDayApp.csproj", "{B0D0E6A6-1C53-4EC3-828F-760DEFCE8322}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirthDayApp", "BirthDayApp\BirthDayApp\BirthDayApp.csproj", "{B0D0E6A6-1C53-4EC3-828F-760DEFCE8322}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

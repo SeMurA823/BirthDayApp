@@ -34,7 +34,7 @@
                 <Frame Style="{StaticResource frame}">
                     <StackLayout Spacing="0" x:Name="stackInfo">
                         <Frame BorderColor="Indigo" CornerRadius="100" Padding="0" HorizontalOptions="Center" Margin="0,20">
-                            <Image Source="@drawable/ProfileLogo.png" x:Name="photo" WidthRequest="200" HeightRequest="200"/>
+                            <Image Source="{Binding PathImage}" x:Name="photo" WidthRequest="200" HeightRequest="200"/>
                         </Frame>
                         <Entry Style="{StaticResource input}" Text="{Binding FirstName}" x:Name="firstName"/>
                         <Entry Style="{StaticResource input}" Text="{Binding LastName}" x:Name="lastName"/>

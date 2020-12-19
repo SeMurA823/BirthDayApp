@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Text;
 
 namespace BirthDayApp.Items
@@ -33,7 +34,7 @@ namespace BirthDayApp.Items
             {
                 foreach (T el in args.NewItems)
                 {
-                    if (Filter(el)) Add(el);
+                    if (Filter(el)) base.Add(el);
                 }
                 return;
             }
@@ -41,13 +42,13 @@ namespace BirthDayApp.Items
             {
                 foreach (T el in args.OldItems)
                 {
-                    if (Filter(el)) Remove(el);
+                    if (Filter(el)) base.Remove(el);
                 }
                 return;
             }
             if (args.Action == NotifyCollectionChangedAction.Reset)
             {
-                Clear();
+                base.Clear();
                 return;
             }
             if (args.Action == NotifyCollectionChangedAction.Replace || args.Action == NotifyCollectionChangedAction.Move)
@@ -57,12 +58,12 @@ namespace BirthDayApp.Items
                 if (Filter(t))
                 {
                     int index;
-                    if ((index = IndexOf(t)) == -1) Add(t);
+                    if ((index = IndexOf(t)) == -1) base.Add(t);
                     else base[index] = t;
                 }
                 else
                 {
-                    Remove(t);
+                    base.Remove(t);
                 }
                 return;
             }

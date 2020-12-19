@@ -7,8 +7,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using BirthDayApp.VkManager;
+using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace BirthDayApp
 {
@@ -16,27 +19,41 @@ namespace BirthDayApp
     {
         private const string PATH_FRIEND_LIST = "friendlist.fu";
         private const string PATH_CONFIGURATION = "configuration.fr";
+        private const string APP_ID = "7629034";
         private int countBeforeDays = 30;
+        public static VkManager.VkManager Manager = new VkManager.VkManager();
         private ObservableCollection<Friend> friends;
         private ObservableCollection<Friend> friendsTodayBirth;
         private ObservableCollection<Friend> friendsNearBirth;
         private Configuration configuration;
-        private TabbedPageMain mainPage;
+        private readonly TabbedPageMain mainPage;
+
+        public event EventHandler<AuthEventArgs> PrintAuth;
         public App()
         {
             InitializeComponent();
-            ReadFriends();
-            mainPage = new TabbedPageMain();
-            MainPage = mainPage;
-            mainPage.FriendListPage.WriteFriend += WriteFriends;
-            mainPage.FriendListPage.SetItemSource(friends);
-            mainPage.MainPage.NearestMainPage.SetItemSource(friendsNearBirth);
-            mainPage.MainPage.TodayMainPage.SetItemSource(friendsTodayBirth);
-            friends.CollectionChanged += WriteFriends;
+            MainPage = (mainPage = new TabbedPageMain());   
         }
 
         protected override void OnStart()
         {
+            ReadConfiguration();
+            Manager.access_token = configuration.Token;
+            ReadFriends();
+            //mainPage.FriendListPage.WriteFriend += WriteFriends;
+            mainPage.FriendListPage.SetItemSource(friends);
+            mainPage.MainPage.NearestMainPage.SetItemSource(friendsNearBirth);
+            mainPage.MainPage.TodayMainPage.SetItemSource(friendsTodayBirth);
+            friends.CollectionChanged += WriteFriends;
+            if (configuration?.Token != null)
+            {
+                IntegrationVk();
+            } 
+            else
+            {
+                mainPage.SettingsPage.AuthClicked += Auth;
+            }
+            
         }
 
         protected override void OnSleep()
@@ -52,17 +69,27 @@ namespace BirthDayApp
         }
         private void ReadFriends()
         {
-            Friend[] arr;
+            List<Friend> list;
             
-            if ((arr = ReadItems<Friend[]>(PATH_FRIEND_LIST)) == null) friends = new ObservableCollection<Friend>();
-            else friends = new ObservableCollection<Friend>(arr);
+            if ((list = ReadItems<List<Friend>>(PATH_FRIEND_LIST)) == null) friends = new ObservableCollection<Friend>();
+            else friends = new ObservableCollection<Friend>(list);
 
             friendsTodayBirth = new ChildCollection<Friend>(friends, x=>x.TodayBirthDay());
             friendsNearBirth = new ChildCollection<Friend>(friends, x => (x.BeforeBirthDay() > 0 && x.BeforeBirthDay() < countBeforeDays));
         }
+        private void ReadConfiguration()
+        {
+            if ((configuration = ReadItems<Configuration>(PATH_CONFIGURATION)) == null) 
+                configuration = new Configuration();
+            Manager.access_token = configuration.Token;
+        }
         private void WriteFriends()
         {
             WriteItems<ObservableCollection<Friend>>(friends, PATH_FRIEND_LIST);
+        }
+        private void WriteConfiguration()
+        {
+            WriteItems<Configuration>(configuration, PATH_CONFIGURATION);
         }
         private void WriteItems<T>(T t, string path)
         {
@@ -83,6 +110,42 @@ namespace BirthDayApp
                 return default(T);
             }
             return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        private void Auth(object sender, EventArgs e)
+        {
+            var auth = new OAuth2Authenticator(
+                clientId: APP_ID,
+                scope: "friends",
+                authorizeUrl: new Uri("https://oauth.vk.com/authorize"),
+                redirectUrl: new Uri("https://oauth.vk.com/blank.html")
+                );
+            auth.Completed += (obj, ee) =>
+            {
+                if (ee.IsAuthenticated)
+                {
+                    configuration.Token = ee.Account.Properties["access_token"].ToString();
+                    WriteConfiguration();
+                }
+            };
+            PrintAuth.Invoke(this, new AuthEventArgs(auth));
+        }
+        public class AuthEventArgs : EventArgs
+        {
+            public OAuth2Authenticator Auth { get; private set; }
+            public AuthEventArgs(OAuth2Authenticator auth)
+            {
+                Auth = auth;
+            }
+        }
+        private void IntegrationVk()
+        {
+            mainPage.SettingsPage.IntegrationVK();
+            mainPage.FriendListPage.IntegrationVK();
+        }
+        private void DisintegrationVK()
+        {
+
         }
     }
 }

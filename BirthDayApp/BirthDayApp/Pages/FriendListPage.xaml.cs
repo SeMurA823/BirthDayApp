@@ -14,11 +14,28 @@ namespace BirthDayApp.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FriendListPage : ContentPage
     {
-        public event EventHandler WriteFriend;
+        private Action standartPushAddItemPage;
+        private Action customPushAddItemPage;
+        private Action selectPushAddItemPage;
         private ObservableCollection<Friend> items;
         public FriendListPage()
         {
             InitializeComponent();
+            selectPushAddItemPage = standartPushAddItemPage = () =>
+            {
+                AddItemPage page = new AddItemPage();
+                page.DoneEvent += Page_Close;
+                page.DoneEvent += AddFriend;
+                page.CancelEvent += Page_Close;
+                Navigation.PushModalAsync(page);
+            };
+            customPushAddItemPage = () =>
+            {
+                WebFriendsListPage page = new WebFriendsListPage();
+                page.AddFriendEvent += AddFriend;
+                page.AddFriendEvent += Page_Close;
+                Navigation.PushModalAsync(page);
+            };
         }
         public void SetItemSource(ObservableCollection<Friend> friends)
         {
@@ -26,11 +43,7 @@ namespace BirthDayApp.Pages
         }
         public void PushAddItemPage(object sender, EventArgs e)
         {
-            AddItemPage page = new AddItemPage();
-            page.DoneEvent += Page_Close;
-            page.DoneEvent += AddFriend;
-            page.CancelEvent += Page_Close;
-            Navigation.PushModalAsync(page);
+            selectPushAddItemPage();
         }
 
         private void Page_Close(object sender, EventArgs e)
@@ -66,6 +79,10 @@ namespace BirthDayApp.Pages
         {
             AddItemPage page = sender as AddItemPage;
             items.Add(page?.Friend);
+        }
+        public void IntegrationVK()
+        {
+            selectPushAddItemPage = customPushAddItemPage;
         }
 
     }
