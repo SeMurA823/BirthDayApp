@@ -17,6 +17,7 @@ namespace BirthDayApp.Pages
         public event EventHandler CancelEvent;
         public event EventHandler DoneEvent;
         private string urlImage;
+        private bool isLocal = true;
         public AddItemPage()
         {
             InitializeComponent();
@@ -28,6 +29,7 @@ namespace BirthDayApp.Pages
             FirstName.Text = friend.FirstName;
             LastName.Text = friend.LastName;
             Photo.Source = (urlImage = friend.Photo200);
+            isLocal = false;
             try
             {
                 BirthDate.Date = DateTime.Parse(friend.BDate);
@@ -64,7 +66,8 @@ namespace BirthDayApp.Pages
                 FirstName.Text,
                 LastName.Text,
                 BirthDate.Date,
-                urlImage);
+                urlImage, 
+                isLocal);
             DoneEvent.Invoke(this, EventArgs.Empty);
         }
         private void Text_Edit(object sender, EventArgs e)

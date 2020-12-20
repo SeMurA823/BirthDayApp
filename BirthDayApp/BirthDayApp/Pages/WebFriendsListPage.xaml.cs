@@ -17,9 +17,7 @@ namespace BirthDayApp.Pages
         public WebFriendsListPage()
         {
             InitializeComponent();
-            Appearing += (obj, ee) => {
-                listView.ItemsSource = App.Manager.GetFriends();
-            };
+            listView.ItemsSource = WebFriend.GetListFriend();
         }
 
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -48,5 +46,37 @@ namespace BirthDayApp.Pages
             page.CancelEvent += Page_Close;
             Navigation.PushModalAsync(page);
         }
+        public class WebFriend : Friend{
+            public Image Photo { get; set; }
+            public static List<WebFriend> GetListFriend()
+            {
+                List<Friend> list = App.Manager.GetFriends();
+                List<WebFriend> webFriends = new List<WebFriend>(list.Count);
+                list.ForEach(x => webFriends.Add(Convert(x)));
+                return webFriends;
+            }
+            private static WebFriend Convert(Friend fr)
+            {
+                return new WebFriend
+                {
+                    FirstName = fr.FirstName,
+                    LastName = fr.LastName,
+                    BDate = fr.BDate,
+                    Photo = new Image
+                    {
+                        Source = new UriImageSource
+                        {
+                            Uri = new Uri(fr.Photo200),
+                            CachingEnabled = false
+                        },
+                        WidthRequest = 72,
+                        HeightRequest = 72,
+                        VerticalOptions = LayoutOptions.Center,
+                        HorizontalOptions = LayoutOptions.Center
+                    }
+                };
+            }
+        }
+
     }
 }

@@ -58,8 +58,8 @@
                                         <ColumnDefinition Width="72"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Frame CornerRadius="36" Grid.Column="0" VerticalOptions="Center" Padding="0" BorderColor="SlateBlue">
-                                        <Image Source="{Binding PathImage}" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="72" HeightRequest="72"/>
+                                    <Frame Content="{Binding Image}" CornerRadius="36" Grid.Column="0" VerticalOptions="Center" Padding="0" BorderColor="SlateBlue">
+                                        
                                     </Frame>
                                     <StackLayout Grid.Column ="1">
                                         <Label TextColor="DarkSlateBlue" FontSize="20" FontAttributes="Bold">

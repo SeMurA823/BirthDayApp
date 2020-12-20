@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace BirthDayApp.Items
 {
@@ -14,6 +15,8 @@ namespace BirthDayApp.Items
         public bool IsLocal { get; private set; }
         public DateTime BirthDate { get; set; }
         public string PathImage { get; set; }
+        [JsonIgnore]
+        public Image Image { get; set; }
         static Friend()
         {
             ComparerByDate = new FriendComparerByDate();
@@ -28,6 +31,27 @@ namespace BirthDayApp.Items
             BirthDateStr = BirthDate.ToShortDateString();
             IsLocal = isLocal;
             PathImage = pathImage;
+            Image = new Image
+            {
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Center,
+                WidthRequest = 72,
+                HeightRequest = 72
+            };
+            if (!IsLocal)
+                Image.Source = new UriImageSource
+                {
+                    Uri = new Uri(PathImage),
+                    CachingEnabled = true,
+                    CacheValidity = new TimeSpan(3, 0, 0)
+                };
+            else
+            {
+                Image.Source = new FileImageSource
+                {
+                    File = PathImage
+                };
+            }
         }
         public DateTime GetBirthDay()
         {
