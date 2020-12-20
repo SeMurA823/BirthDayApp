@@ -45,14 +45,13 @@ namespace BirthDayApp
             mainPage.MainPage.NearestMainPage.SetItemSource(friendsNearBirth);
             mainPage.MainPage.TodayMainPage.SetItemSource(friendsTodayBirth);
             friends.CollectionChanged += WriteFriends;
+            mainPage.SettingsPage.LogIn += Login;
+            mainPage.SettingsPage.LogOut += Logout;
             if (configuration?.Token != null)
             {
                 IntegrationVk();
             } 
-            else
-            {
-                mainPage.SettingsPage.AuthClicked += Auth;
-            }
+            
             
         }
 
@@ -112,7 +111,7 @@ namespace BirthDayApp
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        private void Auth(object sender, EventArgs e)
+        private void Login(object sender, EventArgs e)
         {
             var auth = new OAuth2Authenticator(
                 clientId: APP_ID,
@@ -120,15 +119,24 @@ namespace BirthDayApp
                 authorizeUrl: new Uri("https://oauth.vk.com/authorize"),
                 redirectUrl: new Uri("https://oauth.vk.com/blank.html")
                 );
+            auth.AllowCancel = true;
             auth.Completed += (obj, ee) =>
             {
                 if (ee.IsAuthenticated)
                 {
                     configuration.Token = ee.Account.Properties["access_token"].ToString();
                     WriteConfiguration();
+                    IntegrationVk();
                 }
             };
+            auth.ShowErrors = false;
             PrintAuth.Invoke(this, new AuthEventArgs(auth));
+        }
+        private void Logout(object sender, EventArgs e)
+        {
+            configuration.Token = String.Empty;
+            WriteConfiguration();
+            DisintegrationVK();
         }
         public class AuthEventArgs : EventArgs
         {
@@ -145,7 +153,7 @@ namespace BirthDayApp
         }
         private void DisintegrationVK()
         {
-
+            mainPage.SettingsPage.DisintegraionVK();
         }
     }
 }
