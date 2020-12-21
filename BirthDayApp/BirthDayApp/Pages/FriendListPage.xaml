@@ -44,7 +44,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Frame CornerRadius="20" Padding="0" Grid.Row="0" Margin="20,0,20,10">
-                <SearchBar HeightRequest="40" BackgroundColor="WhiteSmoke" CancelButtonColor="Purple">
+                <SearchBar HeightRequest="40" BackgroundColor="WhiteSmoke" CancelButtonColor="Purple" x:Name="searchBar" TextChanged="SearchBar_TextChanged">
                     <SearchBar.Placeholder>Поиск</SearchBar.Placeholder>
                 </SearchBar>
             </Frame>

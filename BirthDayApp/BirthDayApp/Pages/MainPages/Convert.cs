@@ -43,7 +43,7 @@ namespace BirthDayApp.Pages.MainPages
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             DateTime birthDate = (DateTime)value;
-            int age = DateTime.Today.Year - birthDate.Year + 1;
+            int age = DateTime.Today.Year - birthDate.Year;
             if (age >= 5 && age <= 20) return "Исполняется " + age + " лет";
             if (age % 10 == 1) return "Исполняется " + age + " год";
             if (age % 10 >= 2 && age % 10 <= 4) return "Исполняется " + age + " года";

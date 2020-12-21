@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace BirthDayApp.Pages
         private Action customPushAddItemPage;
         private Action selectPushAddItemPage;
         private ObservableCollection<Friend> items;
+        private ObservableCollection<Friend> sItems;
         public FriendListPage()
         {
             InitializeComponent();
@@ -39,8 +41,9 @@ namespace BirthDayApp.Pages
         }
         public void SetItemSource(ObservableCollection<Friend> friends)
         {
-            listView.ItemsSource = (items = friends);
+            listView.ItemsSource = sItems = new ChildCollection<Friend>(items = friends);
         }
+
         public void PushAddItemPage(object sender, EventArgs e)
         {
             selectPushAddItemPage();
@@ -49,6 +52,7 @@ namespace BirthDayApp.Pages
         private void Page_Close(object sender, EventArgs e)
         {
             Navigation.PopModalAsync();
+            ResetSearch();
         }
 
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -89,5 +93,25 @@ namespace BirthDayApp.Pages
             selectPushAddItemPage = standartPushAddItemPage;
         }
 
+        private void ResetSearch()
+        {
+            searchBar.Text = null;
+        }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            IEnumerable<Friend> sFriends;
+            if (e.NewTextValue != null)
+            {
+                sFriends = items.Where(
+                x =>
+                    x.FirstName.ToLower().Contains(e.NewTextValue.ToLower()) ||
+                    x.LastName.ToLower().Contains(e.NewTextValue.ToLower()));
+            }
+            else sFriends = items;
+            
+            sItems.Clear();
+            foreach (var fr in sFriends) sItems.Add(fr);
+        }
     }
 }
