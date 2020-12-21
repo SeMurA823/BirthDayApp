@@ -14,13 +14,14 @@ namespace BirthDayApp.Items
         public bool IsLocal { get; private set; }
         public DateTime BirthDate { get; set; }
         public string PathImage { get; set; }
+        public string SmallPathImage { get; set; }
         static Friend()
         {
             ComparerByDate = new FriendComparerByDate();
         }
 
         [JsonConstructor]
-        public Friend(string firstName, string lastName, DateTime birthDate, string pathImage, bool isLocal = true)
+        public Friend(string firstName, string lastName, DateTime birthDate, string pathImage, string smallPathImage, bool isLocal = true)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -28,6 +29,7 @@ namespace BirthDayApp.Items
             BirthDateStr = BirthDate.ToShortDateString();
             IsLocal = isLocal;
             PathImage = pathImage;
+            SmallPathImage = smallPathImage;
         }
         public DateTime GetBirthDay()
         {

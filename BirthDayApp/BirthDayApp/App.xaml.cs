@@ -49,10 +49,8 @@ namespace BirthDayApp
             {
                 IntegrationVk();
             } 
-            else
-            {
-                mainPage.SettingsPage.AuthClicked += Auth;
-            }
+            mainPage.SettingsPage.LoginEvent += Login;
+            mainPage.SettingsPage.LogoutEvent += Logout;
             
         }
 
@@ -112,7 +110,7 @@ namespace BirthDayApp
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        private void Auth(object sender, EventArgs e)
+        private void Login(object sender, EventArgs e)
         {
             var auth = new OAuth2Authenticator(
                 clientId: APP_ID,
@@ -120,15 +118,29 @@ namespace BirthDayApp
                 authorizeUrl: new Uri("https://oauth.vk.com/authorize"),
                 redirectUrl: new Uri("https://oauth.vk.com/blank.html")
                 );
+            auth.AllowCancel = true;
+            auth.ShowErrors = false;
             auth.Completed += (obj, ee) =>
             {
                 if (ee.IsAuthenticated)
                 {
                     configuration.Token = ee.Account.Properties["access_token"].ToString();
                     WriteConfiguration();
+                    IntegrationVk();
+                } 
+                else
+                {
+                    auth.OnCancelled();
                 }
             };
+            auth.Error += (obj, ee) => auth.OnCancelled();
             PrintAuth.Invoke(this, new AuthEventArgs(auth));
+        }
+        private void Logout(object sender, EventArgs e)
+        {
+            configuration.Token = null;
+            WriteConfiguration();
+            DisintegrationVK();
         }
         public class AuthEventArgs : EventArgs
         {
@@ -145,7 +157,8 @@ namespace BirthDayApp
         }
         private void DisintegrationVK()
         {
-
+            mainPage.FriendListPage.DisintegrationVK();
+            mainPage.SettingsPage.DisintegrationVK();
         }
     }
 }

@@ -18,5 +18,8 @@ namespace BirthDayApp.VkManager.items
 
         [JsonProperty("photo_200")]
         public string Photo200 { get; set; }
+
+        [JsonProperty("photo_50")]
+        public string Photo50 { get; set; }
     }
 }

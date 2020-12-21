@@ -16,7 +16,8 @@ namespace BirthDayApp.Pages
     {
         public ObservableCollection<ItemMenu> Items { get; set; }
 
-        public event EventHandler AuthClicked;
+        public event EventHandler LoginEvent;
+        public event EventHandler LogoutEvent;
 
         private ItemMenu vkSign;
         private ItemMenu vkOut;
@@ -25,18 +26,13 @@ namespace BirthDayApp.Pages
         {
             InitializeComponent();
             vkSign = new ItemMenu("ВОЙТИ В ВК", () => {
-                AuthClicked.Invoke(vkSign, EventArgs.Empty);
+                LoginEvent.Invoke(vkSign, EventArgs.Empty);
             });
-            vkOut = new ItemMenu("ВЫЙТИ ИЗ ВК", () => { });
+            vkOut = new ItemMenu("ВЫЙТИ ИЗ ВК", () => {
+                LogoutEvent.Invoke(vkOut, EventArgs.Empty);
+            });
             Items = new ObservableCollection<ItemMenu>
             {
-                new ItemMenu("СОРТИРОВКА", ()=>{
-                    SortTypePage page = new SortTypePage(TypeSortFriend.NORMAL);
-                    Navigation.PushAsync(page);
-                }),
-                new ItemMenu("ВНЕШНИЙ ВИД", ()=>{
-                    
-                }),
                 vkSign
             };
 
@@ -66,6 +62,10 @@ namespace BirthDayApp.Pages
         public void IntegrationVK()
         {
             Items[Items.IndexOf(vkSign)] = vkOut;
+        }
+        public void DisintegrationVK()
+        {
+            Items[Items.IndexOf(vkOut)] = vkSign;
         }
     }
 }

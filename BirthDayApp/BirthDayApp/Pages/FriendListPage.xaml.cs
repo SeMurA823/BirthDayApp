@@ -84,6 +84,10 @@ namespace BirthDayApp.Pages
         {
             selectPushAddItemPage = customPushAddItemPage;
         }
+        public void DisintegrationVK()
+        {
+            selectPushAddItemPage = standartPushAddItemPage;
+        }
 
     }
 }

@@ -17,7 +17,7 @@ namespace BirthDayApp.VkManager
         {
             if (access_token == null) return null;
             string urlRequest = START_URL + 
-                "friends.get?order=hints&fields=photo_200,id,first_name,last_name,bdate&access_token=" +
+                "friends.get?order=hints&fields=photo_200,photo_50,id,first_name,last_name,bdate&access_token=" +
                 access_token + 
                 "&v=5.126";
             WebRequest web = WebRequest.Create(urlRequest);

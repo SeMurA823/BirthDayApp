@@ -13,21 +13,23 @@ namespace BirthDayApp.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddItemPage : ContentPage
     {
+        public const string DEFAULT_PATHIMAGE = "@drawable/ProfileLogo.png";
         public Friend Friend { get; set; }
         public event EventHandler CancelEvent;
         public event EventHandler DoneEvent;
-        private string urlImage;
+        private VkManager.items.Friend webFriend;
         public AddItemPage()
         {
             InitializeComponent();
-            urlImage = "@drawable/ProfileLogo.png";
+            Photo.Source = DEFAULT_PATHIMAGE;
         }
         public AddItemPage(VkManager.items.Friend friend)
         {
             InitializeComponent();
+            webFriend = friend;
             FirstName.Text = friend.FirstName;
             LastName.Text = friend.LastName;
-            Photo.Source = (urlImage = friend.Photo200);
+            Photo.Source = friend.Photo200;
             try
             {
                 BirthDate.Date = DateTime.Parse(friend.BDate);
@@ -64,7 +66,9 @@ namespace BirthDayApp.Pages
                 FirstName.Text,
                 LastName.Text,
                 BirthDate.Date,
-                urlImage);
+                (webFriend == null) ? DEFAULT_PATHIMAGE : webFriend.Photo200,
+                (webFriend == null) ? DEFAULT_PATHIMAGE : webFriend.Photo50
+                );
             DoneEvent.Invoke(this, EventArgs.Empty);
         }
         private void Text_Edit(object sender, EventArgs e)
