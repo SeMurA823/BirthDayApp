@@ -22,7 +22,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="White">
-            <CollectionView x:Name="soonList" Margin="20">
+            <CollectionView x:Name="nearestList" Margin="20">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"
                            ItemSpacing="30" />

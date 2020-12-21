@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using BirthDayApp.Pages.SettingPages;
 using BirthDayApp.Items;
 
 namespace BirthDayApp.Pages

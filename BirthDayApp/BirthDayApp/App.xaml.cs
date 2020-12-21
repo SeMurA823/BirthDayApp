@@ -32,6 +32,7 @@ namespace BirthDayApp
         public App()
         {
             InitializeComponent();
+            Device.SetFlags(new string[] { "AppTheme_Experimental" });
             MainPage = (mainPage = new TabbedPageMain());   
         }
 
