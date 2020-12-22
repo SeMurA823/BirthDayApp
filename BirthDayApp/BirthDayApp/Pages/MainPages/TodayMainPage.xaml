@@ -7,23 +7,17 @@
     <ContentPage.Resources>
         <ResourceDictionary x:Name="resourceDictionary">
             <locale:AgeConvert x:Key="age_convert"/>
-            <Style x:Key="labelBlock" TargetType="Label">
-                <Setter Property="FontSize" Value="24"/>
-                <Setter Property="TextColor" Value="Indigo"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-            </Style>
             <Style x:Key="labelName" TargetType="Label">
                 <Setter Property="FontSize" Value="24"/>
-                <Setter Property="TextColor" Value="DarkSlateBlue"/>
+                <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
+        <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
             <StackLayout x:Name="empty" Padding="50">
                 <Image Source="@drawable/sad.png" WidthRequest="200" HorizontalOptions="Center"/>
-                <Label Text="СЕГОДНЯ ПОЗДРАВИТЬ НЕКОГО" TextColor="Indigo" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
             </StackLayout>
             <CollectionView x:Name="todayList">
                 <CollectionView.Header>
@@ -39,12 +33,20 @@
                     <DataTemplate>
                         <Grid>
                             <StackLayout Spacing="0">
-                                <Frame HorizontalOptions="Center" Margin="20,10" Padding="0" CornerRadius="75" Grid.Column="0" HeightRequest="150" WidthRequest="150">
+                                <Frame HorizontalOptions="Center" 
+                                       Margin="20,10"
+                                       Padding="0"
+                                       CornerRadius="75"
+                                       Grid.Column="0"
+                                       HeightRequest="150"
+                                       WidthRequest="150" 
+                                       BackgroundColor="{DynamicResource LogoBackgroundColor}"
+                                       BorderColor="{DynamicResource LogoBackgroundColor}">
                                     <Image Source="{Binding PathImage}"/>
                                 </Frame>
                                 <Label Text="{Binding FirstName}" HorizontalTextAlignment="Center" Style="{StaticResource labelName}"/>
                                 <Label Text="{Binding LastName}" HorizontalTextAlignment="Center" Style="{StaticResource labelName}"/>
-                                <Label Text="{Binding BirthDate, Converter={StaticResource age_convert}}" HorizontalOptions="Center"/>
+                                <Label Text="{Binding BirthDate, Converter={StaticResource age_convert}}" HorizontalOptions="Center" TextColor="{DynamicResource TertiaryTextColor}"/>
                             </StackLayout>
                         </Grid>
                     </DataTemplate>

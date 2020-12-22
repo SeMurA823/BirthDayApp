@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.Pages.SettingPages.EditColorSchemePage"
+             Title="ЦВЕТОВАЯ СХЕМА"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+    <ContentPage.Content>
+        <Grid ColumnSpacing="10" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="yellowBtn" BackgroundColor="Gold" BorderWidth="3" BorderColor="Black" Clicked="yellowBtn_Clicked" Grid.Column="0"/>
+            <Button x:Name="indigoBtn" BackgroundColor="Indigo" BorderWidth="3" BorderColor="White" Clicked="indigoBtn_Clicked" Grid.Column="1"/>
+            <Button x:Name="blueBtn" BackgroundColor="DodgerBlue" BorderWidth="3" BorderColor="RoyalBlue" Clicked="blueBtn_Clicked" Grid.Column="2"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

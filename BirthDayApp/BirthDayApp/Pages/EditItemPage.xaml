@@ -2,15 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:locale="clr-namespace:BirthDayApp.Items"
-             x:Class="BirthDayApp.Pages.EditItemPage">
+             x:Class="BirthDayApp.Pages.EditItemPage"
+             Title="РЕДАКТИРОВАНИЕ"
+             BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="button" TargetType="Button">
-                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}"/>
                 <Setter Property="CornerRadius" Value="0"/>
             </Style>
             <Style x:Key="frame" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}"/>
                 <Setter Property="Padding" Value="5"/>
                 <Setter Property="Margin" Value="20,20"/>
                 <Setter Property="CornerRadius" Value="20"/>
@@ -19,13 +21,13 @@
                 <Setter Property="FontFamily" Value="Oswald"/>
                 <Setter Property="FontSize" Value="Title"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="TextColor" Value="Indigo"/>
-                <Setter Property="PlaceholderColor" Value="Indigo"/>
+                <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"/>
+                <Setter Property="PlaceholderColor" Value="{DynamicResource SecondaryTextColor}"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid BackgroundColor="Lavender">
+        <Grid BackgroundColor="{DynamicResource SecondaryBackgroundColor}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -33,7 +35,7 @@
             <ScrollView VerticalOptions="Center" Grid.Row="0">
                 <Frame Style="{StaticResource frame}">
                     <StackLayout Spacing="0" x:Name="stackInfo">
-                        <Frame BorderColor="Indigo" CornerRadius="100" Padding="0" HorizontalOptions="Center" Margin="0,20">
+                        <Frame BorderColor="{DynamicResource LogoBackgroundColor}" BackgroundColor="{DynamicResource LogoBackgroundColor}" CornerRadius="100" Padding="0" HorizontalOptions="Center" Margin="0,20">
                             <Image Source="{Binding PathImage}" x:Name="photo" WidthRequest="200" HeightRequest="200"/>
                         </Frame>
                         <Entry Style="{StaticResource input}" Text="{Binding FirstName}" x:Name="firstName"/>
@@ -51,8 +53,8 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Text="Изменить" Grid.Column="1" Style="{StaticResource button}" BackgroundColor="DarkSlateBlue" Clicked="Done_Clicked"/>
-                <Button Text="Отмена" Grid.Column="0" Style="{StaticResource button}" BackgroundColor="SlateBlue" Clicked="Cancel_Clicked"/>
+                <Button Text="Изменить" Grid.Column="1" Style="{StaticResource button}" BackgroundColor="{DynamicResource PrimaryColor}" Clicked="Done_Clicked"/>
+                <Button Text="Отмена" Grid.Column="0" Style="{StaticResource button}" BackgroundColor="{DynamicResource SecondaryColor}" Clicked="Cancel_Clicked"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.themes.BlackYellowTheme">
+    <Color x:Key="PageBackgroundColor">#131313</Color>
+    <Color x:Key="NavigationBarColor">Gold</Color>
+    <Color x:Key="PrimaryColor">Gold</Color>
+    <Color x:Key="SecondaryColor">Gold</Color>
+    <Color x:Key="PrimaryTextColor">#131313</Color>
+    <Color x:Key="SecondaryTextColor">Gold</Color>
+    <Color x:Key="TertiaryTextColor">Khaki</Color>
+    <Color x:Key="TransparentColor">Transparent</Color>
+    <Color x:Key="ToolBarColor">#131313</Color>
+    <Color x:Key="WarningTextColor">Orange</Color>
+    <Color x:Key="SearchBarBackgroundColor">#131313</Color>
+    <Color x:Key="SearchBarTextColor">Gold</Color>
+    <Color x:Key="SecondaryBackgroundColor">Gray</Color>
+    <Color x:Key="PanelDeviceColor">DarkGoldenRod</Color>
+    <Color x:Key="LogoBackgroundColor">Gold</Color>
+</ResourceDictionary>

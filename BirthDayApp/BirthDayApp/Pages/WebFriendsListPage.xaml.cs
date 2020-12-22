@@ -17,9 +17,7 @@ namespace BirthDayApp.Pages
         public WebFriendsListPage()
         {
             InitializeComponent();
-            Appearing += (obj, ee) => {
-                listView.ItemsSource = App.Manager.GetFriends();
-            };
+            listView.ItemsSource = App.Manager.GetFriends();
         }
 
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

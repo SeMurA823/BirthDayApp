@@ -3,10 +3,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using BirthDayApp.Items;
+using BirthDayApp.Pages.SettingPages;
+using static BirthDayApp.Pages.SettingPages.EditColorSchemePage;
 
 namespace BirthDayApp.Pages
 {
@@ -17,6 +18,7 @@ namespace BirthDayApp.Pages
 
         public event EventHandler LoginEvent;
         public event EventHandler LogoutEvent;
+        public event EventHandler<ThemeEventArgs> EditColorSchemeEvent;
 
         private ItemMenu vkSign;
         private ItemMenu vkOut;
@@ -32,6 +34,12 @@ namespace BirthDayApp.Pages
             });
             Items = new ObservableCollection<ItemMenu>
             {
+                new ItemMenu("ЦВЕТ", () =>
+                {
+                    EditColorSchemePage page = new EditColorSchemePage();
+                    page.EditColorSchemeEvent += EditColorSchemeEvent;
+                    Navigation.PushAsync(page);
+                }),
                 vkSign
             };
 

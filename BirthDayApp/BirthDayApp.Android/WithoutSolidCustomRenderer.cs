@@ -14,9 +14,10 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
 using System.Threading.Tasks;
+using Android.Widget;
 
 [assembly: ExportRenderer(typeof(Entry), typeof(BirthDayApp.Droid.WithoutSolidCustomEntryRender))]
-[assembly: ExportRenderer(typeof(DatePicker), typeof(BirthDayApp.Droid.WithoutSolidCustomDatePickerRender))]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.DatePicker), typeof(BirthDayApp.Droid.WithoutSolidCustomDatePickerRender))]
 [assembly: ExportRenderer(typeof(SearchBar), typeof(BirthDayApp.Droid.WithoutSolidCustomSearchBarRender))]
 [assembly: ExportRenderer(typeof(NavigationPage), typeof(BirthDayApp.Droid.CNavigationPageRenderer))]
 namespace BirthDayApp.Droid
@@ -39,7 +40,7 @@ namespace BirthDayApp.Droid
         {
 
         }
-        protected override void OnElementChanged(ElementChangedEventArgs<DatePicker> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.DatePicker> e)
         {
             base.OnElementChanged(e);
             Control?.SetBackgroundColor(Android.Graphics.Color.Transparent);
@@ -54,7 +55,11 @@ namespace BirthDayApp.Droid
         protected override void OnElementChanged(ElementChangedEventArgs<SearchBar> e)
         {
             base.OnElementChanged(e);
+            SearchView searchView = Control as SearchView;
             Control?.SetBackgroundColor(Android.Graphics.Color.Transparent);
+            int searchIconId = Context.Resources.GetIdentifier("android:id/search_mag_icon", null, null);
+            ImageView searchViewIcon = (ImageView)searchView.FindViewById<ImageView>(searchIconId);
+            searchViewIcon.SetImageDrawable(null);
         }
     }
     public class CNavigationPageRenderer : NavigationPageRenderer

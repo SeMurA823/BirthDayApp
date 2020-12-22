@@ -9,7 +9,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label Text="{Binding TextStr}" TextColor="DarkSlateBlue" FontSize="24" Padding="20,0" VerticalOptions="Center"/>
+                        <Label Text="{Binding TextStr}" TextColor="{DynamicResource SecondaryTextColor}" FontSize="24" Padding="20,0" VerticalOptions="Center"/>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

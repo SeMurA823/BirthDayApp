@@ -3,52 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BirthDayApp.Pages.FriendListPage"
              Title="СПИСОК"
-             IconImageSource="@drawable/FriendsIcon.png">
+             IconImageSource="@drawable/FriendsIcon.png"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
     <ContentPage.Resources>
-        <Style x:Key="ButtonHeader" x:Name="ButtonHeaderStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Indigo"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="CornerRadius" Value="15"/>
-            <Setter Property="TextColor" Value="Lavender"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-        </Style>
-        <Style x:Key="FrameImage" x:Name="FrameImageStyle" TargetType="Frame">
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="VerticalOptions" Value="Center"/>
-            <Setter Property="CornerRadius" Value="50"/>
-            <Setter Property="WidthRequest" Value="100"/>
-            <Setter Property="HeightRequest" Value="100"/>
-        </Style>
-        <Style x:Key="LabelName" x:Name="LabelNameStyle" TargetType="Label">
-            <Setter Property="TextColor" Value="Indigo"/>
-            <Setter Property="FontSize" Value="Title"/>
-            <Setter Property="FontAttributes" Value="Bold"/>
-        </Style>
-        <Style x:Key="LabelBdate" x:Name="LabelBdateStyle" TargetType="Label">
-            <Setter Property="TextColor" Value="DarkGray"/>
-            <Setter Property="FontSize" Value="Caption"/>
-        </Style>
-        <Style x:Key="BeforeDate" x:Name="BeforeDateStyle" TargetType="Label">
-            <Setter Property="TextColor" Value="DarkRed"/>
-            <Setter Property="FontSize" Value="Small"/>
-            <Setter Property="FontFamily" Value="Oswald"/>
-        </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid RowSpacing="0" BackgroundColor="Indigo">
+        <Grid RowSpacing="0"  BackgroundColor="{DynamicResource NavigationBarColor}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50 "/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Frame CornerRadius="20" Padding="0" Grid.Row="0" Margin="20,0,20,10">
-                <SearchBar HeightRequest="40" BackgroundColor="WhiteSmoke" CancelButtonColor="Purple" x:Name="searchBar" TextChanged="SearchBar_TextChanged">
+                <SearchBar HeightRequest="40"
+                           BackgroundColor="{DynamicResource SearchBarBackgroundColor}"
+                           CancelButtonColor="{DynamicResource NavigationBarColor}"
+                           x:Name="searchBar" 
+                           TextChanged="SearchBar_TextChanged"
+                           TextColor="{DynamicResource SearchBarTextColor}"
+                           PlaceholderColor="{DynamicResource SearchBarTextColor}">
                     <SearchBar.Placeholder>Поиск</SearchBar.Placeholder>
                 </SearchBar>
             </Frame>
-            <StackLayout Grid.Row="1" BackgroundColor="White">
+            <StackLayout Grid.Row="1" BackgroundColor="{DynamicResource PageBackgroundColor}">
                 <ListView x:Name="listView" RowHeight="100" SeparatorVisibility="None" ItemSelected="listView_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -58,11 +34,11 @@
                                         <ColumnDefinition Width="72"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Frame CornerRadius="36" Grid.Column="0" VerticalOptions="Center" Padding="0" BorderColor="SlateBlue">
+                                    <Frame CornerRadius="36" Grid.Column="0" VerticalOptions="Center" Padding="0" BackgroundColor="{DynamicResource LogoBackgroundColor}" BorderColor="{DynamicResource LogoBackgroundColor}">
                                         <Image Source="{Binding PathImage}" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="72" HeightRequest="72"/>
                                     </Frame>
                                     <StackLayout Grid.Column ="1">
-                                        <Label TextColor="DarkSlateBlue" FontSize="20" FontAttributes="Bold">
+                                        <Label TextColor="{DynamicResource SecondaryTextColor}" FontSize="20" FontAttributes="Bold">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="{Binding FirstName}"/>
@@ -71,7 +47,7 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label Text="{Binding BirthDateStr}"/>
+                                        <Label Text="{Binding BirthDateStr}" TextColor="{DynamicResource TertiaryTextColor}"/>
                                     </StackLayout>
                                 </Grid>
                             </ViewCell>

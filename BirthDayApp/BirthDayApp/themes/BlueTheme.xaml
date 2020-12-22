@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.themes.BlueTheme">
+    <Color x:Key="PageBackgroundColor">AliceBlue</Color>
+    <Color x:Key="NavigationBarColor">DodgerBlue</Color>
+    <Color x:Key="PrimaryColor">DodgerBlue</Color>
+    <Color x:Key="SecondaryColor">RoyalBlue</Color>
+    <Color x:Key="PrimaryTextColor">White</Color>
+    <Color x:Key="SecondaryTextColor">DodgerBlue</Color>
+    <Color x:Key="TertiaryTextColor">Gray</Color>
+    <Color x:Key="TransparentColor">Transparent</Color>
+    <Color x:Key="ToolBarColor">whitesmoke</Color>
+    <Color x:Key="WarningTextColor">darkred</Color>
+    <Color x:Key="SearchBarBackgroundColor">whitesmoke</Color>
+    <Color x:Key="SearchBarTextColor">DodgerBlue</Color>
+    <Color x:Key="SecondaryBackgroundColor">White</Color>
+    <Color x:Key="PanelDeviceColor">DodgerBlue</Color>
+    <Color x:Key="LogoBackgroundColor">DodgerBlue</Color>
+</ResourceDictionary>

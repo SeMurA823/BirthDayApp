@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace BirthDayApp.Pages
+namespace BirthDayApp.Pages.NavigationPages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : ContentPage
+    public partial class SettingsNavigationPage : NavigationPage
     {
-        public LoginPage()
+        public SettingsNavigationPage(SettingsPage root) : base(root)
         {
             InitializeComponent();
         }

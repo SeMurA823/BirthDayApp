@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<NavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BirthDayApp.Pages.NavigationPages.SettingsNavigationPage"
+             BarBackgroundColor="{DynamicResource NavigationBarColor}"
+             BarTextColor="{DynamicResource PrimaryTextColor}"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+                Title="Настройки"
+                IconImageSource="@drawable/SettingsIcon.png">
+    
+</NavigationPage>

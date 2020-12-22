@@ -11,7 +11,8 @@ using BirthDayApp.VkManager;
 using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
+using BirthDayApp.themes;
+using static BirthDayApp.Pages.SettingPages.EditColorSchemePage;
 
 namespace BirthDayApp
 {
@@ -20,6 +21,7 @@ namespace BirthDayApp
         private const string PATH_FRIEND_LIST = "friendlist.fu";
         private const string PATH_CONFIGURATION = "configuration.fr";
         private const string APP_ID = "7629034";
+        public UI GUI { get; set; }
         private int countBeforeDays = 30;
         public static VkManager.VkManager Manager = new VkManager.VkManager();
         private ObservableCollection<Friend> friends;
@@ -29,15 +31,18 @@ namespace BirthDayApp
         private readonly TabbedPageMain mainPage;
 
         public event EventHandler<AuthEventArgs> PrintAuth;
-        public App()
+        public App(UI gui)
         {
             InitializeComponent();
+            GUI = gui;
+            EditTheme(this, new ThemeEventArgs(new BlackYellowTheme()));
             Device.SetFlags(new string[] { "AppTheme_Experimental" });
-            MainPage = (mainPage = new TabbedPageMain());   
+            MainPage = (mainPage = new TabbedPageMain());
         }
 
         protected override void OnStart()
         {
+            
             ReadConfiguration();
             Manager.access_token = configuration.Token;
             ReadFriends();
@@ -52,6 +57,7 @@ namespace BirthDayApp
             } 
             mainPage.SettingsPage.LoginEvent += Login;
             mainPage.SettingsPage.LogoutEvent += Logout;
+            mainPage.SettingsPage.EditColorSchemeEvent += EditTheme;
             
         }
 
@@ -61,6 +67,12 @@ namespace BirthDayApp
 
         protected override void OnResume()
         {
+        }
+        private void EditTheme(object sender, ThemeEventArgs e)
+        {
+            customTheme.MergedDictionaries.Clear();
+            customTheme.MergedDictionaries.Add(e.Theme);
+            GUI.EditBarColor((Color)e.Theme["PanelDeviceColor"]);
         }
         private void WriteFriends(object sender, EventArgs e)
         {
@@ -125,7 +137,7 @@ namespace BirthDayApp
             {
                 if (ee.IsAuthenticated)
                 {
-                    configuration.Token = ee.Account.Properties["access_token"].ToString();
+                    Manager.access_token = configuration.Token = ee.Account.Properties["access_token"].ToString();
                     WriteConfiguration();
                     IntegrationVk();
                 } 
@@ -161,5 +173,9 @@ namespace BirthDayApp
             mainPage.FriendListPage.DisintegrationVK();
             mainPage.SettingsPage.DisintegrationVK();
         }
+    }
+    public interface UI 
+    {
+        void EditBarColor(Color color);
     }
 }

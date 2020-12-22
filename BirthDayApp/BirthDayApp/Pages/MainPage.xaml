@@ -3,6 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BirthDayApp.Pages.MainPage"
             Title="Главная"
-            IconImageSource="@drawable/MainIcon.png">
-  <!--Pages can be added as references or inline-->
+            IconImageSource="@drawable/MainIcon.png"
+            BackgroundColor="{DynamicResource PageBackgroundColor}"
+            BarTextColor="{DynamicResource PrimaryTextColor}"
+            SelectedTabColor="{DynamicResource PrimaryTextColor}"
+            UnselectedTabColor="{DynamicResource SecondaryColor}"
+            BarBackgroundColor="{DynamicResource NavigationBarColor}">
+    <!--Pages can be added as references or inline-->
 </TabbedPage>

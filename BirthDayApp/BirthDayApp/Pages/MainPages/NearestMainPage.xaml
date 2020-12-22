@@ -8,20 +8,15 @@
         <ResourceDictionary x:Name="resourceDictionary">
             <locale:BeforeDayConvert x:Key="before_day_convert"/>
             <locale:AgeConvert x:Key="age_convert"/>
-            <Style x:Key="labelBlock" TargetType="Label">
-                <Setter Property="FontSize" Value="24"/>
-                <Setter Property="TextColor" Value="Indigo"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-            </Style>
             <Style x:Key="labelName" TargetType="Label">
                 <Setter Property="FontSize" Value="24"/>
-                <Setter Property="TextColor" Value="DarkSlateBlue"/>
+                <Setter Property="TextColor" Value="{DynamicResource SecondaryColor}"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="White">
+        <StackLayout>
             <CollectionView x:Name="nearestList" Margin="20">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"
@@ -34,7 +29,13 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Frame Grid.Column="0" VerticalOptions="Center" Padding="0" CornerRadius="50" HeightRequest="100">
+                            <Frame Grid.Column="0"
+                                   VerticalOptions="Center" 
+                                   Padding="0"
+                                   CornerRadius="50"
+                                   HeightRequest="100"
+                                   BackgroundColor="{DynamicResource LogoBackgroundColor}"
+                                   BorderColor="{DynamicResource LogoBackgroundColor}">
                                 <Image Source="{Binding PathImage}"/>
                             </Frame>
                             <StackLayout Grid.Column="1" Spacing="0" VerticalOptions="Center">
@@ -49,8 +50,8 @@
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
-                                <Label Text="{Binding BirthDate, Converter={StaticResource before_day_convert}}" TextColor="DarkRed"/>
-                                <Label Text="{Binding BirthDate, Converter={StaticResource age_convert}}"/>
+                                <Label Text="{Binding BirthDate, Converter={StaticResource before_day_convert}}" TextColor="{DynamicResource WarningTextColor}"/>
+                                <Label Text="{Binding BirthDate, Converter={StaticResource age_convert}}" TextColor="{DynamicResource TertiaryTextColor}"/>
                             </StackLayout>
                         </Grid>
                     </DataTemplate>

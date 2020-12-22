@@ -10,6 +10,7 @@ using Xamarin.Forms.Xaml;
 using BirthDayApp.Pages;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
+using BirthDayApp.Pages.NavigationPages;
 
 namespace BirthDayApp
 {
@@ -23,7 +24,6 @@ namespace BirthDayApp
         {
             /* Перемещение тулбара вниз на android*/
             On<Android>().SetToolbarPlacement(value: ToolbarPlacement.Bottom);
-
             SettingsPage = new SettingsPage();
             MainPage = new MainPage();
             FriendListPage = new FriendListPage();
@@ -32,8 +32,9 @@ namespace BirthDayApp
             Children.Add(MainPage);
             Children.Add(new FriendsListNavigationPage(FriendListPage));
 
+            CurrentPage = Children[1];
+
             InitializeComponent();
-     
         }
     }
 }
