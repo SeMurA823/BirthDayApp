@@ -19,6 +19,19 @@ namespace BirthDayApp.Pages.MainPages
         }
     }
 
+    public class LongBeforeDateConvert : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((DateTime)value).ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return DateTime.Parse((string)value);
+        }
+    }
+
     public class BeforeDayConvert : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

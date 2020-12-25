@@ -36,7 +36,7 @@ namespace BirthDayApp
 
         private Configuration configuration; // конфиг
 
-        private readonly TabbedPageMain mainPage;
+        private TabbedPageMain mainPage;
         public App(UI gui)
         {
             InitializeComponent();

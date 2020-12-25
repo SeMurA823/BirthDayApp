@@ -5,8 +5,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
+using System.Threading;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,10 +14,19 @@ namespace BirthDayApp.Pages.MainPages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TodayMainPage : ContentPage
     {
+        public DateCounter Counter { get; private set; }
+
         private ObservableCollection<Friend> friendList;
         public TodayMainPage()
         {
             InitializeComponent();
+            if (DateTime.Today.Month == 12)
+            {
+                counterNewYear.IsVisible = true;
+                Counter = new DateCounter(new DateTime(DateTime.Today.Year + 1, 1, 1));
+                Counter.TimeChangeEvent += TimeChanged;
+            }
+            else counterNewYear.IsVisible = false;
         }
         public void SetItemSource(ObservableCollection<Friend> friends)
         {
@@ -41,6 +49,14 @@ namespace BirthDayApp.Pages.MainPages
         private void FriendListChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
         {
             FriendListChanged();
+        }
+        private void TimeChanged(object sender, EventArgs eventArgs)
+        {
+            counter.Text = string.Format(
+                "{0}дн {1}ч {2}м",
+                Counter.Time.Days, 
+                Counter.Time.Hours,
+                Counter.Time.Minutes);
         }
     }
 }

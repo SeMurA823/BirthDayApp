@@ -7,6 +7,7 @@
     <ContentPage.Resources>
         <ResourceDictionary x:Name="resourceDictionary">
             <locale:AgeConvert x:Key="age_convert"/>
+            <locale:BeforeDayConvert x:Key="before_convert"/>
             <Style x:Key="labelName" TargetType="Label">
                 <Setter Property="FontSize" Value="24"/>
                 <Setter Property="TextColor" Value="{DynamicResource SecondaryTextColor}"/>
@@ -15,11 +16,30 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
+        <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}" Spacing="0">
+            <Frame CornerRadius="0" Padding="10,0" BackgroundColor="#BFCAFCCA" x:Name="counterNewYear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="@drawable/ChristmasTree.png" Grid.Column="0"/>
+                    <Label TextColor="DarkGreen" FontSize="Subtitle" Grid.Column="1" VerticalTextAlignment="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="ОСТАЛОСЬ " FontAttributes="Bold"/>
+                                    <Span x:Name="counter"/>
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+            </Frame>
             <CollectionView x:Name="todayList">
                 <CollectionView.Header>
-                    <StackLayout Padding="50">
-                        <Image x:Name="imageHeader" Source="@drawable/balloons.png" HorizontalOptions="Center"/>
+                    <StackLayout x:Name="header">
+                        <Image Margin="50" x:Name="imageHeader" Source="@drawable/balloons.png" HorizontalOptions="Center"/>
                     </StackLayout>
                 </CollectionView.Header>
                 <CollectionView.ItemsLayout>

@@ -7,6 +7,7 @@ namespace BirthDayApp.Items
 {
     public class Friend
     {
+        
         public static IComparer<Friend> ComparerByDate { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
