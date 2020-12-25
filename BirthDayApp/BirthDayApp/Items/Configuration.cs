@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BirthDayApp.themes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,8 @@ namespace BirthDayApp.Items
     {
         [JsonProperty("token")]
         public string Token { get; set; }
+        
+        [JsonProperty("theme")]
+        public EThemes Theme { get; set; }
     }
 }

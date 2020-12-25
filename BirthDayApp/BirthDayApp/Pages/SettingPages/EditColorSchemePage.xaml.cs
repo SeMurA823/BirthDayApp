@@ -21,26 +21,26 @@ namespace BirthDayApp.Pages.SettingPages
 
         private void yellowBtn_Clicked(object sender, EventArgs e)
         {
-            EditColorSchemeEvent.Invoke(sender, new ThemeEventArgs(new BlackYellowTheme()));
+            EditColorSchemeEvent.Invoke(sender, new ThemeEventArgs(EThemes.BLACK_YELLOW));
         }
 
         private void indigoBtn_Clicked(object sender, EventArgs e)
         {
-            EditColorSchemeEvent.Invoke(sender, new ThemeEventArgs(new IndigoTheme()));
-        }
-
-        public class ThemeEventArgs
-        {
-            public ResourceDictionary Theme { get; private set; }
-            public ThemeEventArgs(ResourceDictionary theme)
-            {
-                Theme = theme;
-            }
+            EditColorSchemeEvent.Invoke(sender, new ThemeEventArgs(EThemes.INDIGO));
         }
 
         private void blueBtn_Clicked(object sender, EventArgs e)
         {
-            EditColorSchemeEvent.Invoke(sender, new ThemeEventArgs(new BlueTheme()));
+            EditColorSchemeEvent.Invoke(sender, new ThemeEventArgs(EThemes.BLUE));
+        }
+
+        public class ThemeEventArgs
+        {
+            public EThemes Theme { get; private set; }
+            public ThemeEventArgs(EThemes theme)
+            {
+                Theme = theme;
+            }
         }
     }
 }

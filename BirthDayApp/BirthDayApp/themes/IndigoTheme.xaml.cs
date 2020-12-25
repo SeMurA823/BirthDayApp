@@ -12,7 +12,7 @@ namespace BirthDayApp.themes
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class IndigoTheme : ResourceDictionary
     {
-        public IndigoTheme()
+        internal IndigoTheme()
         {
             InitializeComponent();
         }

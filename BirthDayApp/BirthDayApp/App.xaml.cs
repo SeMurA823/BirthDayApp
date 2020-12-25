@@ -7,44 +7,51 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using BirthDayApp.VkManager;
+using BirthDayApp.SocialManager;
 using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using BirthDayApp.themes;
 using static BirthDayApp.Pages.SettingPages.EditColorSchemePage;
+using SocialManager.VkManager;
 
 namespace BirthDayApp
 {
     public partial class App : Application
     {
+        /* Пути файлов */
         private const string PATH_FRIEND_LIST = "friendlist.fu";
         private const string PATH_CONFIGURATION = "configuration.fr";
+        /* Номер приложения */
         private const string APP_ID = "7629034";
-        public UI GUI { get; set; }
-        private int countBeforeDays = 30;
-        public static VkManager.VkManager Manager = new VkManager.VkManager();
-        private ObservableCollection<Friend> friends;
-        private ObservableCollection<Friend> friendsTodayBirth;
-        private ObservableCollection<Friend> friendsNearBirth;
-        private Configuration configuration;
-        private readonly TabbedPageMain mainPage;
+        public VkManager Manager { get; private set; } // VK
+        public ThemeManager ThemeManager { get; private set; } //Темы
+        public UI GUI { get; set; } // GUI
 
-        public event EventHandler<AuthEventArgs> PrintAuth;
+        private int countBeforeDays = 30; // За сколько дней до, помещать юзера в "скоро"
+        
+        private ObservableCollection<Friend> friends; // общий список друзей
+        private ObservableCollection<Friend> friendsTodayBirth; // сегодня день рождения
+        private ObservableCollection<Friend> friendsNearBirth; // скоро день рождения
+
+        private Configuration configuration; // конфиг
+
+        private readonly TabbedPageMain mainPage;
         public App(UI gui)
         {
             InitializeComponent();
+
+            Manager = VkManager.GetManager();
+            ReadConfiguration();
+            ThemeManager = new ThemeManager(customTheme, configuration.Theme, gui);
             GUI = gui;
-            EditTheme(this, new ThemeEventArgs(new BlackYellowTheme()));
             Device.SetFlags(new string[] { "AppTheme_Experimental" });
             MainPage = (mainPage = new TabbedPageMain());
         }
 
         protected override void OnStart()
         {
-            
-            ReadConfiguration();
-            Manager.access_token = configuration.Token;
+            Manager.AccessToken = configuration.Token;
             ReadFriends();
             //mainPage.FriendListPage.WriteFriend += WriteFriends;
             mainPage.FriendListPage.SetItemSource(friends);
@@ -60,19 +67,16 @@ namespace BirthDayApp
             mainPage.SettingsPage.EditColorSchemeEvent += EditTheme;
             
         }
-
         protected override void OnSleep()
         {
         }
-
         protected override void OnResume()
         {
         }
         private void EditTheme(object sender, ThemeEventArgs e)
         {
-            customTheme.MergedDictionaries.Clear();
-            customTheme.MergedDictionaries.Add(e.Theme);
-            GUI.EditBarColor((Color)e.Theme["PanelDeviceColor"]);
+            ThemeManager.SetTheme(configuration.Theme = e.Theme); // установка темы
+            WriteConfiguration();
         }
         private void WriteFriends(object sender, EventArgs e)
         {
@@ -90,9 +94,8 @@ namespace BirthDayApp
         }
         private void ReadConfiguration()
         {
-            if ((configuration = ReadItems<Configuration>(PATH_CONFIGURATION)) == null) 
-                configuration = new Configuration();
-            Manager.access_token = configuration.Token;
+            if ((configuration = ReadItems<Configuration>(PATH_CONFIGURATION)) == null) configuration = new Configuration();
+            Manager.AccessToken = configuration.Token;
         }
         private void WriteFriends()
         {
@@ -116,66 +119,39 @@ namespace BirthDayApp
             {
                 json = File.ReadAllText(localPath);
             }
-            catch (IOException e)
+            catch (IOException)
             {
-                return default(T);
+                return default;
             }
             return JsonConvert.DeserializeObject<T>(json);
         }
-
         private void Login(object sender, EventArgs e)
         {
-            var auth = new OAuth2Authenticator(
-                clientId: APP_ID,
-                scope: "friends",
-                authorizeUrl: new Uri("https://oauth.vk.com/authorize"),
-                redirectUrl: new Uri("https://oauth.vk.com/blank.html")
-                );
-            auth.AllowCancel = true;
-            auth.ShowErrors = false;
-            auth.Completed += (obj, ee) =>
-            {
-                if (ee.IsAuthenticated)
-                {
-                    Manager.access_token = configuration.Token = ee.Account.Properties["access_token"].ToString();
-                    WriteConfiguration();
-                    IntegrationVk();
-                } 
-                else
-                {
-                    auth.OnCancelled();
-                }
-            };
-            auth.Error += (obj, ee) => auth.OnCancelled();
-            PrintAuth.Invoke(this, new AuthEventArgs(auth));
+            Manager.Auth(GUI, APP_ID, IntegrationVk);
         }
         private void Logout(object sender, EventArgs e)
         {
-            configuration.Token = null;
-            WriteConfiguration();
             DisintegrationVK();
         }
-        public class AuthEventArgs : EventArgs
+        private void IntegrationVk() // интеграция ВК
         {
-            public OAuth2Authenticator Auth { get; private set; }
-            public AuthEventArgs(OAuth2Authenticator auth)
-            {
-                Auth = auth;
-            }
-        }
-        private void IntegrationVk()
-        {
+            configuration.Token = Manager.AccessToken;
+            WriteConfiguration();
             mainPage.SettingsPage.IntegrationVK();
             mainPage.FriendListPage.IntegrationVK();
         }
-        private void DisintegrationVK()
+        private void DisintegrationVK() // дисинтеграция ВК
         {
+            configuration.Token = null;
+            WriteConfiguration();
             mainPage.FriendListPage.DisintegrationVK();
             mainPage.SettingsPage.DisintegrationVK();
         }
     }
-    public interface UI 
+
+    public interface UI
+        :UIAuth, UIThemeEditable
     {
-        void EditBarColor(Color color);
+
     }
 }

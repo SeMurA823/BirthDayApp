@@ -12,7 +12,7 @@ namespace BirthDayApp.themes
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BlueTheme : ResourceDictionary
     {
-        public BlueTheme()
+        internal BlueTheme()
         {
             InitializeComponent();
         }

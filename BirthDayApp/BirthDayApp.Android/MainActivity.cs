@@ -9,6 +9,8 @@ using Android.OS;
 using static BirthDayApp.App;
 using BirthDayApp;
 using Xamarin.Forms;
+using BirthDayApp.themes;
+using BirthDayApp.SocialManager;
 
 namespace BirthDayApp.Droid
 {
@@ -25,7 +27,6 @@ namespace BirthDayApp.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             App app = new App(this);
-            app.PrintAuth += CreateAuthView;
             
             LoadApplication(app);
         }
@@ -34,15 +35,16 @@ namespace BirthDayApp.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-        public void CreateAuthView(object sender, AuthEventArgs e)
-        {
-            StartActivity(e.Auth.GetUI(this));
-        }
 
+        }
         public void EditBarColor(Color color)
         {
             SetStatusBarColor(Android.Graphics.Color.ParseColor(color.ToHex()));
+        }
+
+        public void StartAuth(Xamarin.Auth.OAuth2Authenticator authenticator)
+        {
+            StartActivity(authenticator.GetUI(this));
         }
     }
 }

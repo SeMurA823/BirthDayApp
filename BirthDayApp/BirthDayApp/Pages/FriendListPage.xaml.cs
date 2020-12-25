@@ -26,6 +26,7 @@ namespace BirthDayApp.Pages
             InitializeComponent();
             selectPushAddItemPage = standartPushAddItemPage = () =>
             {
+                Navigation.PopModalAsync();
                 AddItemPage page = new AddItemPage();
                 page.DoneEvent += Page_Close;
                 page.DoneEvent += AddFriend;
@@ -34,6 +35,7 @@ namespace BirthDayApp.Pages
             };
             customPushAddItemPage = () =>
             {
+                Navigation.PopModalAsync();
                 WebFriendsListPage page = new WebFriendsListPage();
                 page.AddFriendEvent += AddFriend;
                 page.AddFriendEvent += Page_Close;
@@ -67,6 +69,7 @@ namespace BirthDayApp.Pages
         }
         private void PushEditItemPage(Friend f)
         {
+            Navigation.PopModalAsync();
             EditItemPage page = new EditItemPage(f);
             page.DoneEvent += Page_Close;
             page.DoneEvent += (sender, e) => items[items.IndexOf(f)] = f;

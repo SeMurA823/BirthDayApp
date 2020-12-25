@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BirthDayApp.SocialManager.items;
+using SocialManager.VkManager;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BirthDayApp.VkManager.items;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,10 +15,11 @@ namespace BirthDayApp.Pages
     public partial class WebFriendsListPage : ContentPage
     {
         public event EventHandler AddFriendEvent;
+
         public WebFriendsListPage()
         {
             InitializeComponent();
-            listView.ItemsSource = App.Manager.GetFriends();
+            listView.ItemsSource = VkManager.GetManager().GetFriends();
         }
 
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

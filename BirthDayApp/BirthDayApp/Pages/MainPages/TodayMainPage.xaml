@@ -16,13 +16,10 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="{DynamicResource PageBackgroundColor}">
-            <StackLayout x:Name="empty" Padding="50">
-                <Image Source="@drawable/sad.png" WidthRequest="200" HorizontalOptions="Center"/>
-            </StackLayout>
             <CollectionView x:Name="todayList">
                 <CollectionView.Header>
                     <StackLayout Padding="50">
-                        <Image Source="@drawable/balloons.png"/>
+                        <Image x:Name="imageHeader" Source="@drawable/balloons.png" HorizontalOptions="Center"/>
                     </StackLayout>
                 </CollectionView.Header>
                 <CollectionView.ItemsLayout>

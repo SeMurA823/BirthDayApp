@@ -17,13 +17,13 @@ namespace BirthDayApp.Pages
         public Friend Friend { get; set; }
         public event EventHandler CancelEvent;
         public event EventHandler DoneEvent;
-        private VkManager.items.Friend webFriend;
+        private SocialManager.items.Friend webFriend;
         public AddItemPage()
         {
             InitializeComponent();
             Photo.Source = DEFAULT_PATHIMAGE;
         }
-        public AddItemPage(VkManager.items.Friend friend)
+        public AddItemPage(SocialManager.items.Friend friend)
         {
             InitializeComponent();
             webFriend = friend;

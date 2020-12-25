@@ -23,31 +23,24 @@ namespace BirthDayApp.Pages.MainPages
         public void SetItemSource(ObservableCollection<Friend> friends)
         {
             todayList.ItemsSource = (friendList = friends);
-            if (friendList == null || friendList.Count == 0)
-            {
-                empty.IsVisible = true;
-                todayList.IsVisible = false;
-            }
-            else
-            {
-                empty.IsVisible = false;
-                todayList.IsVisible = true;
-            }
+            FriendListChanged();
             friendList.CollectionChanged += FriendListChanged;
         }
 
-        private void FriendListChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
+        private void FriendListChanged()
         {
             if (friendList == null || friendList.Count == 0)
             {
-                empty.IsVisible = true;
-                todayList.IsVisible = false;
+                imageHeader.Source = "@drawable/sad.png";
             }
             else
             {
-                empty.IsVisible = false;
-                todayList.IsVisible = true;
+                imageHeader.Source = "@drawable/balloons.png";
             }
+        }
+        private void FriendListChanged(object sender, NotifyCollectionChangedEventArgs eventArgs)
+        {
+            FriendListChanged();
         }
     }
 }
